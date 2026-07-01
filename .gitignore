@@ -1,0 +1,37 @@
+# ── Data & Models ─────────────────────────────────────────────────────────
+archive_used/
+temp/
+models/*backup*.pkl
+PROJECT_REVIEW_REPORT.md
+REFACTOR_REPORT.md
+hosting.md
+check.py
+
+# ── Python ────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+
+# ── Virtual environments ──────────────────────────────────────────────────
+venv/
+env/
+.venv/
+.env/
+.env
+
+# ── Notebooks & Cache ─────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+.gradio/
+catboost_info/
+finaldeploy.md
+# ── OS & IDE ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo

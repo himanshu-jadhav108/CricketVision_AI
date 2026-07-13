@@ -173,6 +173,12 @@ graph TD
     P -->|JSON Payload| API
 ```
 
+### 📊 High-Fidelity Data Flow Schematic
+
+<div align="center">
+  <img src="assets/diagrams/architecture_flow_diagram.png" alt="CricketVision AI System Architecture and Data Flow Diagram" width="850px" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); margin: 20px 0;">
+</div>
+
 ---
 
 ## 📂 Project Directory Structure
@@ -190,6 +196,8 @@ CricketVision-AI/
 ├── assets/                     # Frontend and evaluation assets
 │   ├── logo/                   # Brand assets and logo
 │   │   └── CricketVision-AI-Logo.png
+│   ├── diagrams/               # High-fidelity system design flowcharts
+│   │   └── architecture_flow_diagram.png
 │   ├── images/examples/        # Sample images used for UI testing
 │   ├── performance/            # Model performance and EDA plots
 │   └── screenshots/            # App UI previews

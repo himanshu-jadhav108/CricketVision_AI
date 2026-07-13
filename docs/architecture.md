@@ -15,6 +15,9 @@ flowchart LR
     F -->|No| H[Uncertain Shot]
 ```
 
+### 📊 High-Fidelity Data Flow Schematic
+![CricketVision AI Architecture Diagram](../assets/diagrams/architecture_flow_diagram.png)
+
 ## Components
 
 | Module | Role |

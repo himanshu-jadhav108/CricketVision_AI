@@ -2,7 +2,6 @@
 
 Step-by-step guide for running CricketVision AI locally, in Docker, and on Render.
 
-For a printable checklist, see [`finaldeploy.md`](../finaldeploy.md).
 
 ## Prerequisites
 

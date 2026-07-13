@@ -61,14 +61,19 @@
 
 ## 📱 Application Interface Preview
 
-> [!NOTE]
-> _App UI screenshot will be added to `assets/screenshots/` once deployed to staging._
-> Alternatively, run the app locally to view the dynamic web interface.
+Below are live screenshots of the **CricketVision AI** interactive Gradio web dashboard performing real-time pose extraction, joint angle computation, and shot classification:
 
-|                      Feature Image                       |                       Biomechanical Extraction                        |
-| :------------------------------------------------------: | :-------------------------------------------------------------------: |
-| ![Example Input](assets/images/examples/cover_drive.jpg) | ![Confusion Matrix](assets/performance/eval_confusion_matrix_pct.png) |
-|   _Sample input frame showing a cover drive execution_   |        _Biomechanical evaluation confusion matrix (V2 model)_         |
+<div align="center">
+  <a href="assets/screenshots/cover_drive_classification.png" target="_blank">
+    <img src="assets/screenshots/cover_drive_classification.png" alt="Cover Drive Classification" width="32%" style="border-radius: 8px; border: 1px solid #334155; margin: 2px;">
+  </a>
+  <a href="assets/screenshots/sweep_shot_classification.png" target="_blank">
+    <img src="assets/screenshots/sweep_shot_classification.png" alt="Sweep Shot Classification" width="32%" style="border-radius: 8px; border: 1px solid #334155; margin: 2px;">
+  </a>
+  <a href="assets/screenshots/leg_glance_classification.png" target="_blank">
+    <img src="assets/screenshots/leg_glance_classification.png" alt="Leg Glance Classification" width="32%" style="border-radius: 8px; border: 1px solid #334155; margin: 2px;">
+  </a>
+</div>
 
 ---
 
@@ -196,7 +201,6 @@ CricketVision_AI/
 ├── predictor.py                # High-level pipeline inference wrapper
 ├── Dockerfile                  # Container deployment instructions
 ├── requirements.txt            # Python dependencies
-├── finaldeploy.md              # Detailed cloud deployment guide
 ├── LICENSE                     # MIT License
 ├── assets/                     # Frontend and evaluation assets
 │   ├── logo/                   # Brand assets and logo
@@ -423,7 +427,7 @@ docker run --rm -p 8001:8001 cricketvision-ai python api.py
 
 ## 🌐 Production Deployment
 
-Refer to [finaldeploy.md](finaldeploy.md) for deploying to platforms like **Render**, **AWS**, or **Hugging Face Spaces**.
+Refer to [docs/deployment.md](docs/deployment.md) for deploying to platforms like **Render**, **AWS**, or **Hugging Face Spaces**.
 
 ### 🔗 Live Demo Link
 The Gradio Web UI dashboard is deployed on Render at:

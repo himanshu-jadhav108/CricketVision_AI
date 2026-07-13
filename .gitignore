@@ -26,7 +26,6 @@ env/
 *.ipynb
 .gradio/
 catboost_info/
-finaldeploy.md
 # ── OS & IDE ──────────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
@@ -35,5 +34,3 @@ desktop.ini
 .idea/
 *.swp
 *.swo
-
-finaldeploy.md

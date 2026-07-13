@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/himanshu-jadhav108/CricketVision-AI"><img src="https://img.shields.io/badge/Status-Production--Ready-brightgreen?style=for-the-badge" alt="Status"></a>
+  <a href="https://github.com/himanshu-jadhav108/CricketVision_AI"><img src="https://img.shields.io/badge/Status-Production--Ready-brightgreen?style=for-the-badge" alt="Status"></a>
   <img src="https://img.shields.io/badge/Model-XGBoost-blue?style=for-the-badge" alt="Model">
   <img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" alt="FastAPI">
@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/himanshu-jadhav108/CricketVision-AI/stargazers"><img src="https://img.shields.io/github/stars/himanshu-jadhav108/CricketVision-AI?style=social" alt="Stars"></a>
+  <a href="https://github.com/himanshu-jadhav108/CricketVision_AI/stargazers"><img src="https://img.shields.io/github/stars/himanshu-jadhav108/CricketVision_AI?style=social" alt="Stars"></a>
   <img src="https://img.shields.io/badge/Last%20Updated-July%202026-orange" alt="Last Updated">
 </p>
 
@@ -105,7 +105,12 @@ Instead of training heavy, resource-intensive neural networks, CricketVision AI 
 
 ## 🚀 Interactive Demo
 
-### Run Gradio Web UI
+### 🌐 Live Production Application
+The application is deployed on Render. You can access the live Gradio dashboard directly:
+
+👉 **[Live App: https://cricketvision-ai.onrender.com/](https://cricketvision-ai.onrender.com/)**
+
+### Run Locally (Gradio Web UI)
 
 ```bash
 python app.py
@@ -184,7 +189,7 @@ graph TD
 ## 📂 Project Directory Structure
 
 ```text
-CricketVision-AI/
+CricketVision_AI/
 ├── app.py                      # Gradio web dashboard
 ├── api.py                      # FastAPI REST application
 ├── config.py                   # Global system & directory configuration
@@ -324,8 +329,8 @@ Ensure you have Python 3.11+ installed.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/himanshu-jadhav108/CricketVision-AI.git
-cd CricketVision-AI
+git clone https://github.com/himanshu-jadhav108/CricketVision_AI.git
+cd CricketVision_AI
 ```
 
 ### 2. Create a Virtual Environment
@@ -419,6 +424,10 @@ docker run --rm -p 8001:8001 cricketvision-ai python api.py
 ## 🌐 Production Deployment
 
 Refer to [finaldeploy.md](finaldeploy.md) for deploying to platforms like **Render**, **AWS**, or **Hugging Face Spaces**.
+
+### 🔗 Live Demo Link
+The Gradio Web UI dashboard is deployed on Render at:
+👉 **[Live App: https://cricketvision-ai.onrender.com/](https://cricketvision-ai.onrender.com/)**
 
 ### Render Setup
 

@@ -62,8 +62,8 @@ System libraries for OpenCV (if not using Docker):
 ### Step 1 — Clone
 
 ```bash
-git clone https://github.com/himanshu-jadhav108/CricketVision-AI.git
-cd CricketVision-AI
+git clone https://github.com/himanshu-jadhav108/CricketVision_AI.git
+cd CricketVision_AI
 ```
 
 ### Step 2 — Create virtual environment
@@ -224,7 +224,7 @@ The Dockerfile includes a health check that verifies model artifacts are present
 
 Before making the repository public:
 
-1. **Repository name** — Use `CricketVision-AI` (display name: **CricketVision AI**)
+1. **Repository name** — Use `CricketVision_AI` (display name: **CricketVision AI**)
 2. **Description** — "Cricket shot classification using MediaPipe Pose + XGBoost"
 3. **Topics** — `machine-learning`, `cricket`, `mediapipe`, `xgboost`, `computer-vision`, `fastapi`, `gradio`
 4. **README** — Already configured with badges, architecture, and setup
@@ -237,7 +237,7 @@ Before making the repository public:
 ```bash
 git add .
 git commit -m "Prepare CricketVision AI for public release"
-git remote add origin https://github.com/himanshu-jadhav108/CricketVision-AI.git
+git remote add origin https://github.com/himanshu-jadhav108/CricketVision_AI.git
 git push -u origin main
 ```
 
@@ -267,7 +267,7 @@ CRICKET_LOG_LEVEL=INFO
 ```
 
 5. Set the port to **7860** in Render's service settings
-6. Deploy and open the generated URL
+6. Deploy and open the generated URL: **https://cricketvision-ai.onrender.com/**
 
 ### Option B — FastAPI Service
 

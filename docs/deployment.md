@@ -20,8 +20,8 @@ For a printable checklist, see [`finaldeploy.md`](../finaldeploy.md).
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/himanshu-jadhav108/CricketVision-AI.git
-cd CricketVision-AI
+git clone https://github.com/himanshu-jadhav108/CricketVision_AI.git
+cd CricketVision_AI
 ```
 
 ### 2. Create a virtual environment

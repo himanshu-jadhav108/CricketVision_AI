@@ -10,7 +10,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 
 # ── Project identity ────────────────────────────────────────────────────────
 PROJECT_NAME = "CricketVision AI"
-GITHUB_REPO_SLUG = "CricketVision-AI"
+GITHUB_REPO_SLUG = "CricketVision_AI"
 DOCKER_IMAGE_NAME = "cricketvision-ai"
 
 # ── Directories ─────────────────────────────────────────────────────────────

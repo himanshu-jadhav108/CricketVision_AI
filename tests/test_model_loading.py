@@ -8,7 +8,7 @@ class ModelLoadingTests(unittest.TestCase):
         self.assertEqual(PROJECT_NAME, "CricketVision AI")
 
     def test_github_repo_slug(self):
-        self.assertEqual(GITHUB_REPO_SLUG, "CricketVision-AI")
+        self.assertEqual(GITHUB_REPO_SLUG, "CricketVision_AI")
 
     def test_required_artifacts_exist(self):
         if not model_files_ready():

@@ -132,7 +132,8 @@ def classify_shot(image):
 CSS = """
 body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important; background-color: #0b0f19 !important; }
 .gradio-container { max-width: 1300px !important; margin: auto; }
-#logo-img { display: block !important; margin: 40px auto 10px auto !important; border-radius: 24px !important; box-shadow: 0 8px 32px rgba(56, 189, 248, 0.25) !important; border: 2px solid rgba(255,255,255,0.05) !important; }
+#logo-img { display: block !important; margin: 40px auto 10px auto !important; background: transparent !important; border: none !important; box-shadow: none !important; }
+#logo-img img { border-radius: 24px !important; box-shadow: 0 8px 32px rgba(56, 189, 248, 0.25) !important; border: 2px solid rgba(255,255,255,0.05) !important; }
 #title { text-align: center; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-size: 3.5em; margin-bottom: 0px; padding-top: 15px; letter-spacing: -1px; }
 #subtitle { text-align: center; color: #94a3b8; font-size: 1.2em; margin-bottom: 30px; font-weight: 500; letter-spacing: 0.2px; }
 .glass-panel { background: rgba(30, 41, 59, 0.5) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 24px !important; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important; padding: 25px !important; }

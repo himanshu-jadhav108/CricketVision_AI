@@ -51,7 +51,6 @@ Classify a cricket batting image.
     "leg_glance_shot": 0.0081,
     "pull_shot": 0.0312,
     "scoop_shot": 0.0045,
-    "straight_drive": 0.0110,
     "sweep_shot": 0.0095
   }
 }

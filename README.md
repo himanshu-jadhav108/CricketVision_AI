@@ -279,7 +279,7 @@ An XGBoost multi-class classifier evaluates the probability distribution over al
 
 The training dataset is structured to capture extreme posture variations:
 
-- **Supported Classes:** `cover_drive`, `straight_drive`, `pull_shot`, `cut_shot`, `sweep_shot`, `scoop_shot`, `leg_glance_shot`.
+- **Supported Classes:** `cover_drive`, `pull_shot`, `cut_shot`, `sweep_shot`, `scoop_shot`, `leg_glance_shot`.
 - **Data Augmentation:** Applies rotation, scaling, brightness shifts, and noise injection to landmarks and source images.
 - **Group Splitting:** We utilize **video-grouped splits** where frames from the same video are grouped together to prevent data leakage between training and testing folds.
 
@@ -413,11 +413,10 @@ docker run --rm -p 8001:8001 cricketvision-ai python api.py
     "confidence": 0.8942,
     "all_probabilities": {
       "cover_drive": 0.8942,
-      "straight_drive": 0.0512,
-      "pull_shot": 0.021,
-      "cut_shot": 0.0113,
-      "sweep_shot": 0.0094,
-      "scoop_shot": 0.0084,
+      "pull_shot": 0.0512,
+      "cut_shot": 0.021,
+      "sweep_shot": 0.0113,
+      "scoop_shot": 0.0094,
       "leg_glance_shot": 0.0045
     }
   }

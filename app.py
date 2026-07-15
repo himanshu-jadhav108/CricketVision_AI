@@ -50,7 +50,6 @@ SHOT_META = {
     'pull_shot'        : ('💪', 'Pull Shot',       'An aggressive short-ball hook'),
     'leg_glance_shot'  : ('⬅️', 'Leg Glance',     'A deflection to the leg side'),
     'cut_shot'         : ('✂️', 'Cut Shot',        'A back-foot cut through point'),
-    'straight_drive'   : ('⬆️', 'Straight Drive', 'An elegant drive back past the bowler'),
     'scoop_shot'       : ('🥄', 'Scoop Shot',      'An unorthodox loft over the keeper'),
     'sweep_shot'       : ('🧹', 'Sweep Shot',      'A sweeping shot played on the leg side'),
     'Uncertain Shot'   : ('⚠️', 'Uncertain Shot',  'Confidence too low. Please provide a clearer image.'),

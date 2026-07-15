@@ -23,6 +23,7 @@ from features.feature_builder import FEATURE_NAMES
 def main():
     print(f"Loading data from {DATA_CSV}...")
     df = pd.read_csv(DATA_CSV)
+    df = df[df['label'] != 'straight_drive']
     
     if 'source_group' not in df.columns:
         print("ERROR: source_group must exist for leakage-free splitting")

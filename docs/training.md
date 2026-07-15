@@ -4,14 +4,13 @@ This document describes how the production XGBoost model was trained. Training n
 
 ## Objective
 
-Classify cricket batting images into seven professional shot types using engineered pose features rather than raw pixels.
+Classify cricket batting images into six professional shot types using engineered pose features rather than raw pixels.
 
 ## Target Classes
 
 | Label | Description |
 | :--- | :--- |
 | `cover_drive` | Front-foot off-side drive |
-| `straight_drive` | Drive back past the bowler |
 | `pull_shot` | Aggressive short-ball hook/pull |
 | `cut_shot` | Back-foot cut through point |
 | `sweep_shot` | Front-foot sweep on the leg side |

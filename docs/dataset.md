@@ -47,14 +47,13 @@ The canonical feature name list is exported as `FEATURE_NAMES` in the feature bu
 
 ## Class Balance
 
-The dataset exhibits natural imbalance — common shots (cover drive, pull) outnumber rare shots (straight drive, scoop). Training applies class weighting to mitigate bias.
+The dataset exhibits natural imbalance — common shots (cover drive, pull) outnumber rare shots (scoop, cut). Training applies class weighting to mitigate bias.
 
 ## Example Images
 
 Sample inference images for the Gradio demo live in [`assets/images/examples/`](../assets/images/examples/):
 
 - `cover_drive.jpg`
-- `straight_drive.jpg`
 - `pull_shot.jpg`
 - `cut_shot.jpg`
 - `sweep_shot.jpg`

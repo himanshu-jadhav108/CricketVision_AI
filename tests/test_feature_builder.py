@@ -21,9 +21,7 @@ class FeatureBuilderTests(unittest.TestCase):
         previous_keypoints[16, 0] = 0.1
 
         features = build_features(keypoints, prev_kp=previous_keypoints)
-
-        self.assertIn("vel_bat_strike_x", features)
-        self.assertIn("vel_bat_strike_y", features)
+        self.assertEqual(len(features), len(FEATURE_NAMES))
         self.assertTrue(np.isfinite(list(features.values())).all())
 
 

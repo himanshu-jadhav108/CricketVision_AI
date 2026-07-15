@@ -190,31 +190,8 @@ def build_features(kp, prev_kp=None):
     features['hip_alignment_x'] = float(p3[R_HIP, 0] - p3[L_HIP, 0])
     features['torso_twist'] = features['shoulder_alignment_x'] - features['hip_alignment_x']
 
-    # --- Temporal Features (Velocity) ---
-    if prev_kp is not None:
-        # Change in position over time (Velocity)
-        pp3 = prev_kp[:, :3]
-        
-        # Wrist velocities
-        features['vel_r_wrist_x'] = float(p3[R_WRIST, 0] - pp3[R_WRIST, 0]) / scale
-        features['vel_r_wrist_y'] = float(p3[R_WRIST, 1] - pp3[R_WRIST, 1]) / scale
-        features['vel_l_wrist_x'] = float(p3[L_WRIST, 0] - pp3[L_WRIST, 0]) / scale
-        features['vel_l_wrist_y'] = float(p3[L_WRIST, 1] - pp3[L_WRIST, 1]) / scale
-        
-        # Bat Velocity
-        prev_wrist_mid = (pp3[R_WRIST] + pp3[L_WRIST]) / 2
-        features['vel_bat_strike_x'] = float(wrist_mid[0] - prev_wrist_mid[0]) / scale
-        features['vel_bat_strike_y'] = float(wrist_mid[1] - prev_wrist_mid[1]) / scale
-    else:
-        # Zero-pad if no previous frame or processing a static image
-        features['vel_r_wrist_x'] = 0.0
-        features['vel_r_wrist_y'] = 0.0
-        features['vel_l_wrist_x'] = 0.0
-        features['vel_l_wrist_y'] = 0.0
-        features['vel_bat_strike_x'] = 0.0
-        features['vel_bat_strike_y'] = 0.0
-
     return features
+
 
 
 FEATURE_NAMES = list(build_features(np.zeros((33, 4))).keys())

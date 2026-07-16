@@ -1,7 +1,7 @@
 CricketVision AI Deployment Report
 
 Production model: XGBoost
-Generated: 2026-07-15 11:15:06
+Generated: 2026-07-16 13:40:06
 Accuracy (Post-Threshold): 92.52%
 Rejected Samples: 422 (32.4%)
 

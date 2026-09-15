@@ -33,30 +33,32 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def get_evaluation_metrics_markdown() -> str:
+def load_production_evaluation_metrics() -> dict[str, str]:
     """Parses metrics dynamically from reports/evaluation.md and docs/training.md."""
     eval_file = REPORTS_DIR / "evaluation.md"
     training_file = DOCS_DIR / "training.md"
 
-    overall_acc = "N/A"
-    cv_score = None
-    post_acc = "N/A"
-    reject_rate = "N/A"
+    metrics = {
+        "overall_acc": "N/A",
+        "cv_score": None,
+        "post_acc": "N/A",
+        "reject_rate": "N/A",
+    }
 
     if eval_file.exists():
         try:
             eval_text = eval_file.read_text(encoding="utf-8")
             m_raw = re.search(r"Overall Accuracy(?:\s*\(Raw\))?:\s*([0-9.]+%)", eval_text)
             if m_raw:
-                overall_acc = m_raw.group(1)
+                metrics["overall_acc"] = m_raw.group(1)
 
             m_post = re.search(r"Accuracy\s*\(Post-Threshold\):\s*([0-9.]+%)", eval_text)
             if m_post:
-                post_acc = m_post.group(1)
+                metrics["post_acc"] = m_post.group(1)
 
             m_rej = re.search(r"Rejected Samples:\s*\d+\s*\(([0-9.]+%)", eval_text)
             if m_rej:
-                reject_rate = m_rej.group(1)
+                metrics["reject_rate"] = m_rej.group(1)
         except Exception as err:
             logger.warning("Failed to parse %s: %s", eval_file, err)
 
@@ -65,16 +67,27 @@ def get_evaluation_metrics_markdown() -> str:
             train_text = training_file.read_text(encoding="utf-8")
             m_cv = re.search(r"Cross-validation\s*\|\s*[\d.]+%\s*\|\s*\*\*([0-9.]+%)\*\*", train_text)
             if m_cv:
-                cv_score = m_cv.group(1)
+                metrics["cv_score"] = m_cv.group(1)
         except Exception as err:
             logger.warning("Failed to parse %s: %s", training_file, err)
 
-    rows = [f"| **Overall Accuracy** | **{overall_acc}** |"]
-    if cv_score:
-        rows.append(f"| **Cross-Validation Score** | **{cv_score}** |")
+    return metrics
+
+
+PROD_METRICS = load_production_evaluation_metrics()
+
+
+def get_evaluation_metrics_markdown(metrics: dict[str, str] | None = None) -> str:
+    """Builds Markdown metrics table using parsed production metrics."""
+    if metrics is None:
+        metrics = PROD_METRICS
+
+    rows = [f"| **Overall Accuracy** | **{metrics['overall_acc']}** |"]
+    if metrics.get("cv_score"):
+        rows.append(f"| **Cross-Validation Score** | **{metrics['cv_score']}** |")
     rows.extend([
-        f"| **Post-threshold Accuracy** | **{post_acc}** |",
-        f"| **Rejection Rate** | **{reject_rate}** |",
+        f"| **Post-threshold Accuracy** | **{metrics['post_acc']}** |",
+        f"| **Rejection Rate** | **{metrics['reject_rate']}** |",
     ])
 
     return "\n".join([
@@ -544,7 +557,7 @@ with gr.Blocks(title=PROJECT_NAME, theme=premium_theme, css=CSS) as demo:
                 <a href='https://himanshu-jadhav-portfolio.vercel.app/' target='_blank'><img src='https://img.shields.io/badge/Portfolio-FFD700?style=for-the-badge&logo=google-chrome&logoColor=black'></a>
             </div>
             <div class="footer-architecture">
-                {PROJECT_NAME} Model Architecture: MediaPipe Pose + XGBoost + Confidence Thresholding · 91.45% Safe Accuracy
+                {PROJECT_NAME} Model Architecture: MediaPipe Pose + XGBoost + Confidence Thresholding · {PROD_METRICS['post_acc']} Safe Accuracy
             </div>
         </div>
         """

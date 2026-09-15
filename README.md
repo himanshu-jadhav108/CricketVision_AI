@@ -312,8 +312,8 @@ The production V2 model shows the following performance metrics:
 | :--------------------------- | :------- | :--------- |
 | **Overall Accuracy**         | >= 75.0% | **77.5%**  |
 | **Cross-Validation Score**   | >= 75.0% | **78.2%**  |
-| **Safe (Filtered) Accuracy** | >= 90.0% | **91.45%** |
-| **Rejection Rate**           | < 35.0%  | **~29.7%** |
+| **Safe (Filtered) Accuracy** | >= 90.0% | **92.52%** |
+| **Rejection Rate**           | < 35.0%  | **32.4%**  |
 
 ### Evaluation Visualizations
 

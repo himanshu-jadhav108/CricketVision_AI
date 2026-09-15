@@ -70,7 +70,7 @@ Evaluation outputs (confusion matrix, plots, reports) belong in [`reports/`](../
 
 ## Confidence Thresholding
 
-At deployment time, predictions with `max(probability) < 0.65` are mapped to `"Uncertain Shot"`. This raises precision on accepted predictions to **91.45%** at the cost of rejecting ~29.7% of samples. See [`reports/evaluation.md`](../reports/evaluation.md).
+At deployment time, predictions with `max(probability) < 0.65` are mapped to `"Uncertain Shot"`. This raises precision on accepted predictions to **92.52%** at the cost of rejecting ~32.4% of samples. See [`reports/evaluation.md`](../reports/evaluation.md).
 
 ## Reproducing Training (Manual)
 

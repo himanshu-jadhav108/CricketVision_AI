@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import logging
+import re
 
 import cv2
 import gradio as gr
 from PIL import Image
 
 from config import (
+    ASSETS_DIR,
+    DOCS_DIR,
     EXAMPLES_DIR,
     GRADIO_HOST,
     GRADIO_PORT,
@@ -17,6 +20,7 @@ from config import (
     MODEL_PATH,
     ENCODER_PATH,
     PROJECT_NAME,
+    REPORTS_DIR,
     SCALER_PATH,
     missing_model_files,
 )
@@ -27,6 +31,91 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(name)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
+
+
+def get_evaluation_metrics_markdown() -> str:
+    """Parses metrics dynamically from reports/evaluation.md and docs/training.md."""
+    eval_file = REPORTS_DIR / "evaluation.md"
+    training_file = DOCS_DIR / "training.md"
+
+    overall_acc = "N/A"
+    cv_score = None
+    post_acc = "N/A"
+    reject_rate = "N/A"
+
+    if eval_file.exists():
+        try:
+            eval_text = eval_file.read_text(encoding="utf-8")
+            m_raw = re.search(r"Overall Accuracy(?:\s*\(Raw\))?:\s*([0-9.]+%)", eval_text)
+            if m_raw:
+                overall_acc = m_raw.group(1)
+
+            m_post = re.search(r"Accuracy\s*\(Post-Threshold\):\s*([0-9.]+%)", eval_text)
+            if m_post:
+                post_acc = m_post.group(1)
+
+            m_rej = re.search(r"Rejected Samples:\s*\d+\s*\(([0-9.]+%)", eval_text)
+            if m_rej:
+                reject_rate = m_rej.group(1)
+        except Exception as err:
+            logger.warning("Failed to parse %s: %s", eval_file, err)
+
+    if training_file.exists():
+        try:
+            train_text = training_file.read_text(encoding="utf-8")
+            m_cv = re.search(r"Cross-validation\s*\|\s*[\d.]+%\s*\|\s*\*\*([0-9.]+%)\*\*", train_text)
+            if m_cv:
+                cv_score = m_cv.group(1)
+        except Exception as err:
+            logger.warning("Failed to parse %s: %s", training_file, err)
+
+    rows = [f"| **Overall Accuracy** | **{overall_acc}** |"]
+    if cv_score:
+        rows.append(f"| **Cross-Validation Score** | **{cv_score}** |")
+    rows.extend([
+        f"| **Post-threshold Accuracy** | **{post_acc}** |",
+        f"| **Rejection Rate** | **{reject_rate}** |",
+    ])
+
+    return "\n".join([
+        "| Metric | Production Result |",
+        "| :--- | :--- |",
+        *rows,
+    ])
+
+
+def get_performance_gallery_items() -> list[tuple[str, str]]:
+    """Collects paths and one-line captions for the Model Performance tab."""
+    items = []
+    cm_path = ASSETS_DIR / "performance" / "eval_confusion_matrix_pct.png"
+    if cm_path.exists():
+        items.append((
+            str(cm_path),
+            "Confusion Matrix (%) — Row-normalized classification accuracy across 6 shot classes (post-threshold).",
+        ))
+
+    f1_path = ASSETS_DIR / "performance" / "eval_per_class_f1.png"
+    if f1_path.exists():
+        items.append((
+            str(f1_path),
+            "Per-Class F1 Score — Post-threshold F1 metrics across all 6 shot classes.",
+        ))
+
+    fi_path = ASSETS_DIR / "performance" / "feature_importance.png"
+    if fi_path.exists():
+        items.append((
+            str(fi_path),
+            "Feature Importance — Top 20 biomechanical pose features contributing to shot discrimination.",
+        ))
+
+    sweep_path = REPORTS_DIR / "threshold_sweep.png"
+    if sweep_path.exists():
+        items.append((
+            str(sweep_path),
+            "Threshold Sensitivity Sweep — Trade-off curve between post-threshold accuracy and sample rejection rate.",
+        ))
+
+    return items
 
 # --- CONFIGURATION ---
 # Current production model paths reflecting the V2 architecture
@@ -373,55 +462,73 @@ with gr.Blocks(title=PROJECT_NAME, theme=premium_theme, css=CSS) as demo:
         gr.Markdown(f"# {PROJECT_NAME}", elem_id="title")
         gr.Markdown("Transforming batting motion into data. Upload a cricket photo and see **XGBoost biomechanics** in action.", elem_id="subtitle")
     
-    with gr.Row(equal_height=True):
-        # LEFT COLUMN: Input & Tips
-        with gr.Column(scale=1, elem_classes=["glass-panel"]):
-            gr.Markdown("### 📸 Biomechanical Capture")
-            image_input = gr.Image(label="Input Image", type="pil", height=450, elem_id="image-input")
-            submit_btn = gr.Button("🔍 ANALYZE BIOMECHANICS", variant="primary")
-            
-            with gr.Accordion("🛠️ Advanced Capture Tips", open=False, elem_classes=["accordion"]):
-                gr.Markdown(
-                    "- **Body Visibility:** Ensure head-to-toe visibility for optimal pose detection.\n"
-                    "- **Angle:** Side-on or 45° angles provide the richest biomechanical data.\n"
-                    "- **Resolution:** Motion blur affects MediaPipe quality. Use clear daylight images.\n"
-                    "- **System Guardrail:** V2 identifies shots only with > 65% confidence for professional reliability."
+    with gr.Tabs():
+        with gr.Tab("🏏 Classify a Shot"):
+            with gr.Row(equal_height=True):
+                # LEFT COLUMN: Input & Tips
+                with gr.Column(scale=1, elem_classes=["glass-panel"]):
+                    gr.Markdown("### 📸 Biomechanical Capture")
+                    image_input = gr.Image(label="Input Image", type="pil", height=450, elem_id="image-input")
+                    submit_btn = gr.Button("🔍 ANALYZE BIOMECHANICS", variant="primary")
+                    
+                    with gr.Accordion("🛠️ Advanced Capture Tips", open=False, elem_classes=["accordion"]):
+                        gr.Markdown(
+                            "- **Body Visibility:** Ensure head-to-toe visibility for optimal pose detection.\n"
+                            "- **Angle:** Side-on or 45° angles provide the richest biomechanical data.\n"
+                            "- **Resolution:** Motion blur affects MediaPipe quality. Use clear daylight images.\n"
+                            "- **System Guardrail:** V2 identifies shots only with > 65% confidence for professional reliability."
+                        )
+                        
+                # RIGHT COLUMN: Results & Diagnostic Output
+                with gr.Column(scale=1, elem_classes=["glass-panel"]):
+                    gr.Markdown("### ⚙️ Diagnostic AI Analysis")
+                    output_html = gr.HTML(
+                        value="""
+                        <div class="awaiting-input">
+                            <div class="awaiting-icon">🏏</div>
+                            <div class="awaiting-text">Awaiting Biomechanical Input</div>
+                            <div class="awaiting-subtext">Upload a batting image and click analyze to extract skeletal angles and shot classification.</div>
+                        </div>
+                        """
+                    )
+                    output_img  = gr.Image(label="Pose Skeleton Extraction", height=380, elem_id="output-image")
+
+            # Core Event Logic
+            submit_btn.click(
+                fn=classify_shot,
+                inputs=[image_input],
+                outputs=[output_html, output_img],
+            )
+
+            # Auto-load Examples if folder exists
+            if EXAMPLES_DIR.exists():
+                example_files = sorted(
+                    path for path in EXAMPLES_DIR.iterdir()
+                    if path.suffix.lower() in {".jpg", ".jpeg", ".png"}
                 )
-                
-        # RIGHT COLUMN: Results & Diagnostic Output
-        with gr.Column(scale=1, elem_classes=["glass-panel"]):
-            gr.Markdown("### ⚙️ Diagnostic AI Analysis")
-            output_html = gr.HTML(
-                value="""
-                <div class="awaiting-input">
-                    <div class="awaiting-icon">🏏</div>
-                    <div class="awaiting-text">Awaiting Biomechanical Input</div>
-                    <div class="awaiting-subtext">Upload a batting image and click analyze to extract skeletal angles and shot classification.</div>
-                </div>
-                """
-            )
-            output_img  = gr.Image(label="Pose Skeleton Extraction", height=380, elem_id="output-image")
+                if example_files:
+                    gr.Examples(
+                        examples=[[str(path)] for path in example_files[:7]],
+                        inputs=image_input,
+                        label="Sample Biomechanical Tests",
+                        examples_per_page=7,
+                    )
 
-    # Core Event Logic
-    submit_btn.click(
-        fn=classify_shot,
-        inputs=[image_input],
-        outputs=[output_html, output_img],
-    )
-
-    # Auto-load Examples if folder exists
-    if EXAMPLES_DIR.exists():
-        example_files = sorted(
-            path for path in EXAMPLES_DIR.iterdir()
-            if path.suffix.lower() in {".jpg", ".jpeg", ".png"}
-        )
-        if example_files:
-            gr.Examples(
-                examples=[[str(path)] for path in example_files[:7]],
-                inputs=image_input,
-                label="Sample Biomechanical Tests",
-                examples_per_page=7,
-            )
+        with gr.Tab("📊 Model Performance"):
+            with gr.Column(elem_classes=["glass-panel"]):
+                gr.Markdown("### 📈 Production Model Performance Metrics")
+                gr.Markdown(get_evaluation_metrics_markdown())
+                gr.Markdown("post-threshold accuracy only applies to the samples the model was confident enough to classify; the rest are marked \"Uncertain Shot\" rather than guessed.")
+                gr.Markdown("### 📊 Diagnostic Evaluation & Sensitivity Analysis")
+                gr.Gallery(
+                    value=get_performance_gallery_items(),
+                    label="Evaluation Diagnostics",
+                    show_label=False,
+                    columns=2,
+                    rows=2,
+                    object_fit="contain",
+                    height="auto",
+                )
 
     # Footer / Personal Branding
     gr.HTML(

@@ -27,7 +27,7 @@ flowchart LR
 | [`predictor.py`](../predictor.py) | End-to-end inference orchestration |
 | [`config.py`](../config.py) | Centralised paths, thresholds, and environment settings |
 | [`features/pose_extractor.py`](../features/pose_extractor.py) | MediaPipe Pose wrapper (33 landmarks) |
-| [`features/feature_builder.py`](../features/feature_builder.py) | Biomechanical feature engineering (~60 features) |
+| [`features/feature_builder.py`](../features/feature_builder.py) | Biomechanical feature engineering (51 features) |
 | [`models/`](../models/) | Runtime model artifacts (`.pkl`) |
 
 ## Data Flow
@@ -37,7 +37,7 @@ flowchart LR
 3. **Feature engineering** — Joint angles, distances, Z-depth reach, bat-vector angles, and optional temporal velocity features are computed.
 4. **Preprocessing** — Features are scaled with the fitted `StandardScaler`.
 5. **Optional selection** — If a compatible `selector.pkl` is provided and feature widths match, feature pruning is applied.
-6. **Classification** — XGBoost outputs class probabilities for seven shot types.
+6. **Classification** — XGBoost outputs class probabilities for six shot types.
 7. **Guardrail** — Predictions below the 65% confidence threshold return `"Uncertain Shot"`.
 
 ## Deployment Topology

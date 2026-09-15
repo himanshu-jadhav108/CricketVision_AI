@@ -52,6 +52,7 @@ def main():
     y_test_acc = y_test[accepted_idx]
     base_preds_acc = base_preds[accepted_idx]
     
+    raw_acc = accuracy_score(y_test, base_preds) * 100
     post_acc = accuracy_score(y_test_acc, base_preds_acc) * 100
     reject_pct = (rejected_count / len(y_test)) * 100
     
@@ -60,6 +61,7 @@ def main():
 
 Production model: XGBoost
 Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+Overall Accuracy (Raw): {raw_acc:.2f}%
 Accuracy (Post-Threshold): {post_acc:.2f}%
 Rejected Samples: {rejected_count} ({reject_pct:.1f}%)
 

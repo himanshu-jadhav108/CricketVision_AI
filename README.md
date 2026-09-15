@@ -91,7 +91,7 @@ CricketVision AI solves this by extracting a **3D biomechanical skeleton** from 
 
 ### Why Machine Learning (XGBoost)?
 
-Instead of training heavy, resource-intensive neural networks, CricketVision AI engineers **60+ biomechanical features** (like joint angles, body leans, and extensions) and feeds them into a highly optimized **XGBoost classifier**. This results in sub-millisecond inference times, complete interpretability, and robust performance on CPU-only edge deployments.
+Instead of training heavy, resource-intensive neural networks, CricketVision AI engineers **51 engineered features** (like joint angles, body leans, and extensions) and feeds them into a highly optimized **XGBoost classifier**. This results in sub-millisecond inference times, complete interpretability, and robust performance on CPU-only edge deployments.
 
 ---
 
@@ -250,7 +250,7 @@ CricketVision_AI/
 
 ### 1. Dataset Collection & Validation
 
-Images representing seven cricket shots (cover drive, straight drive, pull shot, cut shot, sweep shot, scoop shot, leg glance) are collected and verified.
+Images representing 6 shots (cover drive, pull shot, cut shot, sweep shot, scoop shot, leg glance) are used for training and evaluation. straight_drive was excluded from training due to an insufficient sample count (~345 sequences vs. 1000+ for the top classes).
 
 ### 2. Pose Extraction
 
@@ -258,7 +258,7 @@ The MediaPipe `Pose` module processes the pixel arrays to retrieve 33 anatomical
 
 ### 3. Biomechanical Feature Engineering
 
-We compute **60+ spatial attributes** to capture the kinetics of cricket shots:
+We compute **51 engineered features** to capture the kinetics of cricket shots:
 
 - **Joint Angles:** Knee flexion, hip bend, elbow extension, shoulder rotation.
 - **Spatial Reach:** Foot-to-wrist Z-depth differences.
@@ -280,6 +280,7 @@ An XGBoost multi-class classifier evaluates the probability distribution over al
 The training dataset is structured to capture extreme posture variations:
 
 - **Supported Classes:** `cover_drive`, `pull_shot`, `cut_shot`, `sweep_shot`, `scoop_shot`, `leg_glance_shot`.
+- **Excluded (insufficient data):** `straight_drive` (~345 sequences vs. 1000+ for the top classes).
 - **Data Augmentation:** Applies rotation, scaling, brightness shifts, and noise injection to landmarks and source images.
 - **Group Splitting:** We utilize **video-grouped splits** where frames from the same video are grouped together to prevent data leakage between training and testing folds.
 
@@ -295,8 +296,8 @@ SCALER_PATH = "models/scaler.pkl"          # StandardScaler
 ENCODER_PATH = "models/label_encoder.pkl"  # LabelEncoder
 ```
 
-- **Feature Input Dimension:** 60+ engineered landmarks.
-- **Target Output Class:** 7 shots + 1 guardrail fallback.
+- **Feature Input Dimension:** 51 engineered features.
+- **Target Output Class:** 6 shots + 1 guardrail fallback (straight_drive excluded due to insufficient training samples).
 - **Decision Engine:** Confidence score thresholding at `0.65`.
 
 ---
@@ -321,7 +322,7 @@ The production V2 model shows the following performance metrics:
   <img src="assets/performance/feature_importance.png" alt="Feature Importance" width="45%">
 </p>
 
-- **Confusion Matrix (Left):** Details the clean boundaries between straight and cover drives.
+- **Confusion Matrix (Left):** Details the clean classification boundaries across the 6 trained shot classes.
 - **Feature Importance (Right):** Identifies hip and shoulder angles as the most critical diagnostic landmarks.
 
 ---

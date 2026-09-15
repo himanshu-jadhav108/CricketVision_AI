@@ -4,15 +4,16 @@ CricketVision AI was trained on pose-derived features extracted from cricket bat
 
 ## Classes
 
-Seven professional shot types are supported at inference time:
+Six professional shot types are trained and supported in the production model:
 
-- Cover Drive
-- Straight Drive
-- Pull Shot
-- Cut Shot
-- Sweep Shot
-- Scoop Shot
-- Leg Glance
+- Cover Drive (`cover_drive`)
+- Pull Shot (`pull_shot`)
+- Cut Shot (`cut_shot`)
+- Sweep Shot (`sweep_shot`)
+- Scoop Shot (`scoop_shot`)
+- Leg Glance (`leg_glance_shot`)
+
+*Excluded from training:* `straight_drive` was excluded due to an insufficient sample count (~345 sequences vs. 1000+ for the top classes).
 
 ## Sources
 
@@ -65,3 +66,7 @@ Sample inference images for the Gradio demo live in [`assets/images/examples/`](
 - Performance depends on MediaPipe detecting a full batting pose.
 - Side-on and 45° camera angles work best; extreme zoom or occlusion degrades quality.
 - Low-light and motion-blur frames reduce landmark confidence.
+
+## Known Limitations
+
+- **Weak-Class Sample Imbalance:** `cut_shot` (F1 0.74, ~390 training sequences) and `scoop_shot` (F1 0.85 but precision only 0.79, ~485 sequences) are the weakest-performing classes, correlated with having the fewest training sequences among the 6 trained classes. Recommend collecting additional `cut_shot` and `scoop_shot` samples as the highest-leverage next step before attempting any architecture change.

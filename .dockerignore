@@ -1,0 +1,14 @@
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+.git/
+.vscode/
+.ipynb_checkpoints/
+archive_used/
+temp/
+*.log
+.env
+REFACTOR_REPORT.md
+PROJECT_REVIEW_REPORT.md

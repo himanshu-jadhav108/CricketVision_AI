@@ -311,7 +311,7 @@ def format_results(label: str, confidence: float, all_probs: dict[str, float]) -
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Selective Accuracy</span>
-                    <span class="meta-value">92.52%</span>
+                    <span class="meta-value">92.52% (@ 67.64% cov)</span>
                 </div>
             </div>
         </div>
@@ -326,7 +326,10 @@ def format_results(label: str, confidence: float, all_probs: dict[str, float]) -
     """
 
 
-def classify_shot(image: Image.Image | np.ndarray | None) -> tuple[str, Image.Image | None]:
+def classify_shot(
+    image: Image.Image | np.ndarray | None,
+    progress: gr.Progress = gr.Progress(track_tqdm=False),
+) -> tuple[str, Image.Image | None]:
     """Processes images and returns diagnostic results HTML and annotated pose."""
     if image is None:
         return """
@@ -352,6 +355,7 @@ def classify_shot(image: Image.Image | np.ndarray | None) -> tuple[str, Image.Im
         """, None
 
     try:
+        progress(0.25, desc="Analyzing your image: detecting MediaPipe 3D pose...")
         result = pred_instance.predict(image)
         if not result['success']:
             return f"""
@@ -364,9 +368,11 @@ def classify_shot(image: Image.Image | np.ndarray | None) -> tuple[str, Image.Im
             </div>
             """, None
 
+        progress(0.75, desc="Computing 51 biomechanical features & XGBoost inference...")
         annotated_rgb = cv2.cvtColor(result['annotated'], cv2.COLOR_BGR2RGB)
         annotated_pil = Image.fromarray(annotated_rgb)
         output_html_content = format_results(result['label'], result['confidence'], result['all_probs'])
+        progress(1.0, desc="Shot diagnosis complete.")
         return output_html_content, annotated_pil
 
     except Exception as exc:
@@ -814,6 +820,42 @@ div[data-testid="image"]:hover {
 }
 
 /* ── HOW IT WORKS PIPELINE CARDS ─────────────────────────── */
+.pipeline-flow-banner {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    background: rgba(10, 15, 26, 0.5) !important;
+    border: 1px solid rgba(56, 189, 248, 0.15) !important;
+    border-radius: 12px !important;
+    padding: 12px 14px !important;
+    margin-bottom: 16px !important;
+}
+
+.flow-step {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: #e2e8f0 !important;
+    background: rgba(30, 41, 59, 0.7) !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    white-space: nowrap !important;
+}
+
+.flow-step.highlight {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: rgba(16, 185, 129, 0.35) !important;
+    color: #10b981 !important;
+}
+
+.flow-arrow {
+    color: #38bdf8 !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+}
+
 .pipeline-grid {
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
@@ -1154,7 +1196,7 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
             elem_id="hero-subtitle",
         )
         gr.Markdown(
-            "Pose-based biomechanical features + XGBoost for lightweight shot recognition.",
+            "Pose-based biomechanical features + XGBoost.",
             elem_id="hero-tagline",
         )
 
@@ -1291,6 +1333,24 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
                 """)
 
                 gr.HTML("""
+                <div class="pipeline-flow-banner">
+                    <span class="flow-step">📸 Image</span>
+                    <span class="flow-arrow">➔</span>
+                    <span class="flow-step">🦴 MediaPipe Pose</span>
+                    <span class="flow-arrow">➔</span>
+                    <span class="flow-step">📍 33 Landmarks</span>
+                    <span class="flow-arrow">➔</span>
+                    <span class="flow-step">📐 51 Features</span>
+                    <span class="flow-arrow">➔</span>
+                    <span class="flow-step">🌲 XGBoost</span>
+                    <span class="flow-arrow">➔</span>
+                    <span class="flow-step">🛡️ Confidence Gate (0.65)</span>
+                    <span class="flow-arrow">➔</span>
+                    <span class="flow-step highlight">🏏 Shot / Uncertain</span>
+                </div>
+                """)
+
+                gr.HTML("""
                 <div class="pipeline-grid">
                     <div class="step-card">
                         <span class="step-num">Step 1</span>
@@ -1351,15 +1411,15 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
                     <div class="metric-stat-card">
                         <div class="stat-val">{PROD_METRICS['overall_acc']}</div>
                         <div class="stat-lbl">Raw Holdout Accuracy</div>
-                        <div class="stat-sub">1,304 unseen test frames</div>
+                        <div class="stat-sub">1,304 unseen frames &bull; Macro F1 ~0.78</div>
                     </div>
                     <div class="metric-stat-card featured">
                         <div class="stat-val emerald">{PROD_METRICS['post_acc']}</div>
                         <div class="stat-lbl">Selective Accuracy</div>
-                        <div class="stat-sub">882 accepted frames (@ 0.65)</div>
+                        <div class="stat-sub">At 67.64% coverage (882 accepted @ 0.65)</div>
                     </div>
                     <div class="metric-stat-card">
-                        <div class="stat-val">67.6%</div>
+                        <div class="stat-val">67.64%</div>
                         <div class="stat-lbl">Sample Coverage</div>
                         <div class="stat-sub">{PROD_METRICS['reject_rate']} rejected as uncertain</div>
                     </div>

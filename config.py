@@ -38,7 +38,7 @@ POSE_MIN_DETECTION_CONFIDENCE = float(
 
 # ── Gradio UI ─────────────────────────────────────────────────────────────────
 GRADIO_HOST = os.getenv("CRICKET_APP_HOST", "0.0.0.0")
-GRADIO_PORT = int(os.getenv("CRICKET_APP_PORT", "7860"))
+GRADIO_PORT = int(os.getenv("PORT", os.getenv("CRICKET_APP_PORT", "7860")))
 GRADIO_SHARE = os.getenv("CRICKET_APP_SHARE", "false").strip().lower() in {
     "1",
     "true",

@@ -544,6 +544,8 @@ html, body {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
     margin-bottom: 12px !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
     padding-bottom: 10px !important;
@@ -561,11 +563,12 @@ html, body {
     font-size: 0.72rem !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.8px !important;
+    letter-spacing: 0.6px !important;
     color: #38bdf8 !important;
     background: rgba(56, 189, 248, 0.1) !important;
     padding: 3px 8px !important;
     border-radius: 6px !important;
+    white-space: nowrap !important;
 }
 
 /* Primary Action Button */
@@ -899,12 +902,14 @@ div[data-testid="image"]:hover {
 /* Horizontal swipeable tab bar on mobile */
 div[role="tablist"], .tab-nav {
     display: flex !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
     gap: 6px !important;
-    padding: 4px 2px 8px 2px !important;
+    padding: 4px 2px 10px 2px !important;
     margin-bottom: 14px !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
@@ -937,6 +942,23 @@ div[role="tablist"] button, .tab-nav button {
     min-width: 0 !important;
 }
 
+/* Studio Row - Desktop Side-by-Side */
+#studio-main-row,
+.studio-row {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 20px !important;
+    width: 100% !important;
+    align-items: stretch !important;
+}
+
+#studio-main-row > div,
+.studio-row > div,
+.studio-row > .product-card {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+}
+
 /* Examples gallery mobile optimization */
 @media (max-width: 600px) {
     .gr-examples .gallery {
@@ -961,57 +983,112 @@ div[role="tablist"] button, .tab-nav button {
     .metrics-row { grid-template-columns: repeat(2, 1fr) !important; }
 }
 
-/* Tablet Portrait & Handheld Devices (<= 860px) */
-@media (max-width: 860px) {
+/* Tablet Portrait & Handheld Devices (<= 920px: iPad, Surface, and all Mobiles) */
+@media (max-width: 920px) {
     .gradio-container { padding: 10px 12px !important; }
-    .gradio-container .gr-row,
-    .gradio-container .row,
-    div[data-testid="row"],
-    .tabitem > div > .gr-row,
-    .tabitem > div > .row {
+
+    /* Force studio row and all multi-column rows into full-width vertical stack */
+    #studio-main-row,
+    .studio-row,
+    .gradio-container .unequal-height,
+    .gradio-container .stretch,
+    .tabitem > div > div[class*="unequal-height"],
+    .tabitem > div > div[class*="stretch"] {
         display: flex !important;
         flex-direction: column !important;
+        width: 100% !important;
         gap: 16px !important;
     }
+
+    #studio-main-row > div,
+    .studio-row > div,
+    .product-card,
+    .input-card,
+    .results-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        flex: 1 1 100% !important;
+        box-sizing: border-box !important;
+        padding: 18px 16px !important;
+        margin-bottom: 0 !important;
+    }
+
     .hero-card { padding: 16px 14px !important; margin-bottom: 14px !important; }
     .hero-brand { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 10px !important; }
     .brand-logo { width: 40px !important; height: 40px !important; }
     #hero-title { font-size: 1.7rem !important; }
     #hero-subtitle { font-size: 0.92rem !important; }
     #hero-tagline { font-size: 0.82rem !important; margin-bottom: 8px !important; }
-    .product-card { width: 100% !important; max-width: 100% !important; min-width: 0 !important; padding: 16px 14px !important; margin-bottom: 12px !important; }
-    .metric-gauge-card { flex-direction: column !important; text-align: center !important; padding: 14px 12px !important; }
-    .gauge-meta { width: 100% !important; }
-    .meta-item { justify-content: space-between !important; padding: 4px 0 !important; border-bottom: 1px dashed rgba(255, 255, 255, 0.06) !important; }
+
+    .card-title-bar {
+        gap: 8px !important;
+        margin-bottom: 12px !important;
+        padding-bottom: 8px !important;
+    }
+    .card-title-text {
+        font-size: 1rem !important;
+    }
+    .card-tag {
+        font-size: 0.68rem !important;
+        padding: 2px 7px !important;
+    }
+
+    .metric-gauge-card {
+        padding: 14px 14px !important;
+        gap: 14px !important;
+    }
+
     #image-input, #image-input .image-container,
-    #output-image, #output-image .image-container { max-height: 280px !important; min-height: 180px !important; }
-    #image-input img, #output-image img { max-height: 280px !important; object-fit: contain !important; }
+    #output-image, #output-image .image-container {
+        max-height: 280px !important;
+        min-height: 180px !important;
+    }
+    #image-input img, #output-image img {
+        max-height: 280px !important;
+        object-fit: contain !important;
+    }
+
+    button.primary-analyze {
+        height: 50px !important;
+        font-size: 0.98rem !important;
+        width: 100% !important;
+        touch-action: manipulation !important;
+    }
+
     .pipeline-grid { grid-template-columns: 1fr !important; }
     div[data-testid="gallery"] > div { grid-template-columns: 1fr !important; }
 }
 
 /* Standard Mobile Screens (<= 480px: iPhone 14/15 Pro Max, Galaxy S23, Pixel) */
 @media (max-width: 480px) {
-    .gradio-container { padding: 6px !important; }
-    .hero-card { padding: 14px 10px !important; border-radius: 14px !important; }
+    .gradio-container { padding: 6px 8px !important; }
+    .hero-card { padding: 14px 10px !important; border-radius: 14px !important; margin-bottom: 10px !important; }
     .brand-logo { width: 34px !important; height: 34px !important; border-radius: 9px !important; }
-    #hero-title { font-size: 1.42rem !important; letter-spacing: -0.5px !important; }
-    #hero-subtitle { font-size: 0.84rem !important; line-height: 1.35 !important; }
-    #hero-tagline { font-size: 0.76rem !important; line-height: 1.35 !important; margin-bottom: 8px !important; }
+    #hero-title { font-size: 1.4rem !important; letter-spacing: -0.5px !important; }
+    #hero-subtitle { font-size: 0.82rem !important; line-height: 1.3 !important; }
+    #hero-tagline { font-size: 0.75rem !important; line-height: 1.3 !important; margin-bottom: 8px !important; }
+    .hero-badges-container { gap: 5px !important; }
     .tech-pill { font-size: 0.68rem !important; padding: 2px 7px !important; }
-    .classes-bar { gap: 4px !important; padding: 6px 6px !important; border-radius: 10px !important; }
-    .class-chip { font-size: 0.68rem !important; padding: 3px 6px !important; border-radius: 6px !important; }
-    button.primary-analyze { height: 50px !important; font-size: 0.95rem !important; width: 100% !important; touch-action: manipulation !important; }
+    .classes-bar { gap: 4px !important; padding: 6px 8px !important; border-radius: 10px !important; margin-bottom: 12px !important; }
+    .class-chip { font-size: 0.68rem !important; padding: 2px 6px !important; border-radius: 6px !important; }
+
+    .product-card { padding: 14px 12px !important; border-radius: 14px !important; }
     .card-title-text { font-size: 0.95rem !important; }
+    .card-tag { font-size: 0.65rem !important; padding: 2px 6px !important; }
+
+    button.primary-analyze { height: 48px !important; font-size: 0.92rem !important; }
+
     .result-kicker { font-size: 0.68rem !important; }
     .result-title { font-size: 1.25rem !important; }
     .result-desc { font-size: 0.82rem !important; line-height: 1.35 !important; }
     .abstention-banner { font-size: 0.78rem !important; padding: 8px 10px !important; }
     .stat-val { font-size: 1.25rem !important; }
     .metrics-row { grid-template-columns: 1fr !important; gap: 8px !important; }
-    .gauge-ring { width: 80px !important; height: 80px !important; }
-    .gauge-center { width: 66px !important; height: 66px !important; }
-    .gauge-pct { font-size: 1.05rem !important; }
+    .gauge-ring { width: 76px !important; height: 76px !important; }
+    .gauge-center { width: 62px !important; height: 62px !important; }
+    .gauge-pct { font-size: 1rem !important; }
+    .meta-item { font-size: 0.75rem !important; }
     .prob-info { font-size: 0.78rem !important; }
     .prob-bar-track { height: 5px !important; }
     .footer-wrap { padding: 18px 8px !important; }
@@ -1023,15 +1100,14 @@ div[role="tablist"] button, .tab-nav button {
 
 /* Compact Mobile Screens (<= 360px: Small Android / Fold Cover) */
 @media (max-width: 360px) {
-    #hero-title { font-size: 1.25rem !important; }
+    #hero-title { font-size: 1.22rem !important; }
     #hero-subtitle { font-size: 0.78rem !important; }
     #hero-tagline { font-size: 0.7rem !important; }
     .class-chip { font-size: 0.62rem !important; padding: 2px 4px !important; }
     .tech-pill { font-size: 0.64rem !important; padding: 2px 5px !important; }
     .card-title-text { font-size: 0.88rem !important; }
-    .gauge-ring { width: 72px !important; height: 72px !important; }
-    .gauge-center { width: 58px !important; height: 58px !important; }
-    .gauge-pct { font-size: 0.95rem !important; }
+    .metric-gauge-card { flex-direction: column !important; text-align: center !important; }
+    .gauge-meta { width: 100% !important; }
 }
 """
 
@@ -1082,25 +1158,27 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
             elem_id="hero-tagline",
         )
 
-        with gr.Row(elem_classes=["hero-badges-container"]):
-            gr.HTML("""
+        gr.HTML("""
+            <div class="hero-badges-container">
                 <span class="tech-pill accent">⚡ 51 3D Biomechanical Features</span>
                 <span class="tech-pill">🌲 Regularized XGBoost</span>
                 <span class="tech-pill">🛡️ 65% Confidence Gate</span>
                 <span class="tech-pill">⏱️ &lt; 65ms CPU Latency</span>
                 <span class="tech-pill">🟢 System Online</span>
-            """)
+            </div>
+        """)
 
     # 2. PRODUCTION CLASSES SHOWCASE STRIP
-    with gr.Row(elem_classes=["classes-bar"]):
-        gr.HTML("""
+    gr.HTML("""
+        <div class="classes-bar">
             <div class="class-chip">🏏 Cover Drive</div>
             <div class="class-chip">💪 Pull Shot</div>
             <div class="class-chip">✂️ Cut Shot</div>
             <div class="class-chip">🧹 Sweep Shot</div>
             <div class="class-chip">🥄 Scoop Shot</div>
             <div class="class-chip">⬅️ Leg Glance</div>
-        """)
+        </div>
+    """)
 
     # 3. MAIN PRODUCT TABS
     with gr.Tabs():
@@ -1108,12 +1186,15 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
         # TAB 1: ANALYZE SHOT (Primary Studio)
         # ─────────────────────────────────────────────────────────────────
         with gr.Tab("⚡ Analyze Shot"):
-            with gr.Row(equal_height=False):
+            with gr.Row(equal_height=False, elem_id="studio-main-row", elem_classes=["studio-row"]):
                 # LEFT COLUMN: Input Card
-                with gr.Column(scale=1, elem_classes=["product-card"]):
-                    with gr.Row(elem_classes=["card-title-bar"]):
-                        gr.HTML('<h3 class="card-title-text">📸 Biomechanical Frame Capture</h3>')
-                        gr.HTML('<span class="card-tag">Upload / Drag & Drop</span>')
+                with gr.Column(scale=1, elem_classes=["product-card", "input-card"]):
+                    gr.HTML("""
+                    <div class="card-title-bar">
+                        <h3 class="card-title-text">📸 Biomechanical Frame Capture</h3>
+                        <span class="card-tag">Upload / Drag & Drop</span>
+                    </div>
+                    """)
 
                     image_input = gr.Image(
                         label="Upload a cricket shot image (drag & drop or click)",
@@ -1137,10 +1218,13 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
                         )
 
                 # RIGHT COLUMN: Results Card
-                with gr.Column(scale=1, elem_classes=["product-card"]):
-                    with gr.Row(elem_classes=["card-title-bar"]):
-                        gr.HTML('<h3 class="card-title-text">📊 Diagnostic Result</h3>')
-                        gr.HTML('<span class="card-tag">XGBoost &bull; 6 Classes</span>')
+                with gr.Column(scale=1, elem_classes=["product-card", "results-card"]):
+                    gr.HTML("""
+                    <div class="card-title-bar">
+                        <h3 class="card-title-text">📊 Diagnostic Result</h3>
+                        <span class="card-tag">XGBoost &bull; 6 Classes</span>
+                    </div>
+                    """)
 
                     output_html = gr.HTML(
                         value="""
@@ -1160,11 +1244,19 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
                         interactive=False,
                     )
 
-            # Core Execution Event
+            # Core Execution Event with smooth auto-scroll on mobile
             submit_btn.click(
                 fn=classify_shot,
                 inputs=[image_input],
                 outputs=[output_html, output_img],
+                js="""() => {
+                    setTimeout(() => {
+                        const resultsEl = document.querySelector('.results-card');
+                        if (resultsEl && window.innerWidth <= 920) {
+                            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 250);
+                }"""
             )
 
             # Example Gallery
@@ -1191,9 +1283,12 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
         # ─────────────────────────────────────────────────────────────────
         with gr.Tab("🔬 How It Works & Architecture"):
             with gr.Column(elem_classes=["product-card"]):
-                with gr.Row(elem_classes=["card-title-bar"]):
-                    gr.HTML('<h3 class="card-title-text">End-to-End Inference Pipeline</h3>')
-                    gr.HTML('<span class="card-tag">6-Step Flow</span>')
+                gr.HTML("""
+                <div class="card-title-bar">
+                    <h3 class="card-title-text">End-to-End Inference Pipeline</h3>
+                    <span class="card-tag">6-Step Flow</span>
+                </div>
+                """)
 
                 gr.HTML("""
                 <div class="pipeline-grid">
@@ -1243,9 +1338,12 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
         # ─────────────────────────────────────────────────────────────────
         with gr.Tab("📈 Model Performance & Evaluation"):
             with gr.Column(elem_classes=["product-card"]):
-                with gr.Row(elem_classes=["card-title-bar"]):
-                    gr.HTML('<h3 class="card-title-text">Quantitative Validation & Metrics</h3>')
-                    gr.HTML('<span class="card-tag">Dual-Metric Framing</span>')
+                gr.HTML("""
+                <div class="card-title-bar">
+                    <h3 class="card-title-text">Quantitative Validation & Metrics</h3>
+                    <span class="card-tag">Dual-Metric Framing</span>
+                </div>
+                """)
 
                 # Metric Cards Strip
                 gr.HTML(f"""
@@ -1301,9 +1399,12 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
         # ─────────────────────────────────────────────────────────────────
         with gr.Tab("⚙️ System Specifications & Shot Guide"):
             with gr.Column(elem_classes=["product-card"]):
-                with gr.Row(elem_classes=["card-title-bar"]):
-                    gr.HTML('<h3 class="card-title-text">System Specifications & Kinematic Guide</h3>')
-                    gr.HTML('<span class="card-tag">Technical Specs</span>')
+                gr.HTML("""
+                <div class="card-title-bar">
+                    <h3 class="card-title-text">System Specifications & Kinematic Guide</h3>
+                    <span class="card-tag">Technical Specs</span>
+                </div>
+                """)
 
                 gr.Markdown("""
                 | Component | Specification | Technical Notes |

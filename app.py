@@ -969,14 +969,280 @@ div[role="tablist"] button, .tab-nav button {
     font-weight: 600 !important;
 }
 
-/* Prevent tables and markdown blocks from blowing out mobile width */
-.gradio-container table {
-    display: block !important;
+/* ── FULL-WIDTH RESPONSIVE TABLES & MARKDOWN ───────────────── */
+.gradio-container .prose {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.table-responsive-wrapper {
     width: 100% !important;
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
+    margin: 12px 0 24px 0 !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: rgba(10, 15, 26, 0.5) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+.gradio-container table,
+table.specs-table {
+    display: table !important;
+    width: 100% !important;
+    min-width: 580px !important;
     border-collapse: collapse !important;
-    margin: 12px 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+.gradio-container table thead,
+table.specs-table thead {
+    background: rgba(30, 41, 59, 0.85) !important;
+}
+
+.gradio-container table th,
+table.specs-table th {
+    color: #e2e8f0 !important;
+    font-size: 0.84rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+    padding: 13px 18px !important;
+    border-bottom: 2px solid rgba(56, 189, 248, 0.25) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+    text-align: left !important;
+}
+
+.gradio-container table th:last-child,
+table.specs-table th:last-child {
+    border-right: none !important;
+}
+
+.gradio-container table td,
+table.specs-table td {
+    padding: 13px 18px !important;
+    font-size: 0.86rem !important;
+    color: #cbd5e1 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.04) !important;
+    vertical-align: middle !important;
+    line-height: 1.45 !important;
+}
+
+.gradio-container table td:last-child,
+table.specs-table td:last-child {
+    border-right: none !important;
+}
+
+.gradio-container table tr:last-child td,
+table.specs-table tr:last-child td {
+    border-bottom: none !important;
+}
+
+.gradio-container table tbody tr:nth-child(even),
+table.specs-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.015) !important;
+}
+
+.gradio-container table tbody tr:hover td,
+table.specs-table tbody tr:hover td {
+    background: rgba(56, 189, 248, 0.04) !important;
+}
+
+/* Distribute column widths across the full 100% desktop width */
+.gradio-container table th:first-child,
+.gradio-container table td:first-child,
+table.specs-table th:first-child,
+table.specs-table td:first-child {
+    width: 22% !important;
+    color: #f8fafc !important;
+    font-weight: 600 !important;
+}
+
+.gradio-container table th:nth-child(2),
+.gradio-container table td:nth-child(2),
+table.specs-table th:nth-child(2),
+table.specs-table td:nth-child(2) {
+    width: 36% !important;
+}
+
+.gradio-container table th:nth-child(3),
+.gradio-container table td:nth-child(3),
+table.specs-table th:nth-child(3),
+table.specs-table td:nth-child(3) {
+    width: 42% !important;
+}
+
+/* ── KINEMATIC SHOT CARDS GRID ────────────────────────────── */
+.kinematic-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 16px !important;
+    margin-top: 14px !important;
+    margin-bottom: 22px !important;
+    width: 100% !important;
+}
+
+@media (max-width: 1040px) {
+    .kinematic-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .kinematic-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.kinematic-card {
+    background: rgba(15, 23, 42, 0.55) !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+    border-radius: 14px !important;
+    padding: 16px 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.kinematic-card:hover {
+    border-color: rgba(56, 189, 248, 0.35) !important;
+    transform: translateY(-2px) !important;
+    background: rgba(15, 23, 42, 0.75) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+.kinematic-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.kinematic-title-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.kinematic-emoji {
+    font-size: 1.4rem !important;
+    line-height: 1 !important;
+}
+
+.kinematic-name {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #f8fafc !important;
+    margin: 0 !important;
+}
+
+.kinematic-badge {
+    font-size: 0.68rem !important;
+    font-weight: 600 !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+    padding: 2px 7px !important;
+    border-radius: 5px !important;
+    background: rgba(56, 189, 248, 0.1) !important;
+    color: #38bdf8 !important;
+    border: 1px solid rgba(56, 189, 248, 0.25) !important;
+}
+
+.kinematic-stance-tag {
+    display: inline-block !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    color: #10b981 !important;
+    background: rgba(16, 185, 129, 0.1) !important;
+    border: 1px solid rgba(16, 185, 129, 0.2) !important;
+    border-radius: 4px !important;
+    padding: 2px 6px !important;
+    margin-bottom: 8px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
+}
+
+.kinematic-desc {
+    font-size: 0.82rem !important;
+    color: #cbd5e1 !important;
+    line-height: 1.45 !important;
+    margin-bottom: 12px !important;
+    flex-grow: 1 !important;
+}
+
+.kinematic-markers {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    background: rgba(10, 15, 26, 0.4) !important;
+    padding: 8px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+.kinematic-marker-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    font-size: 0.74rem !important;
+}
+
+.kinematic-marker-label {
+    color: #94a3b8 !important;
+    font-weight: 500 !important;
+}
+
+.kinematic-marker-val {
+    color: #38bdf8 !important;
+    font-weight: 600 !important;
+    text-align: right !important;
+}
+
+/* ── BIOMECHANICAL REFERENCE BANNER ───────────────────────── */
+.biomech-banner {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 14px !important;
+    margin-top: 14px !important;
+    background: rgba(10, 15, 26, 0.45) !important;
+    border: 1px solid rgba(56, 189, 248, 0.2) !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    width: 100% !important;
+}
+
+@media (max-width: 800px) {
+    .biomech-banner {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.biomech-feature-item {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+}
+
+.biomech-feature-icon {
+    font-size: 1.25rem !important;
+    flex-shrink: 0 !important;
+    line-height: 1.2 !important;
+}
+
+.biomech-feature-title {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: #f1f5f9 !important;
+    margin-bottom: 3px !important;
+}
+
+.biomech-feature-desc {
+    font-size: 0.78rem !important;
+    color: #94a3b8 !important;
+    line-height: 1.4 !important;
 }
 
 .gradio-container .block,
@@ -1453,32 +1719,276 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
             with gr.Column(elem_classes=["product-card"]):
                 gr.HTML("""
                 <div class="card-title-bar">
-                    <h3 class="card-title-text">System Specifications & Kinematic Guide</h3>
-                    <span class="card-tag">Technical Specs</span>
+                    <h3 class="card-title-text">System Specifications & Biomechanical Guide</h3>
+                    <span class="card-tag">Technical Architecture</span>
                 </div>
-                """)
 
-                gr.Markdown("""
-                | Component | Specification | Technical Notes |
-                | :--- | :--- | :--- |
-                | **Model Architecture** | Extreme Gradient Boosting (`XGBClassifier`) | Multi-class softmax objective (`multi:softprob`) |
-                | **Input Vector** | 51 continuous 3D numerical features | Angle degrees, torso-scaled distances, bat vectors |
-                | **Active Classes (6)** | Cover Drive, Pull, Cut, Sweep, Scoop, Leg Glance | `straight_drive` excluded due to scarcity (345 samples) |
-                | **Hardware Target** | 100% CPU edge-deployable | Zero GPU required; ~250MB container RAM footprint |
-                | **Model Binary Size** | 2.82 MB (`models/xgboost_v1.pkl`) | Serialized via Joblib |
-                | **Guardrail Threshold** | 0.65 softmax confidence | Configurable via `CRICKET_CONFIDENCE_THRESHOLD` |
-                | **REST API** | FastAPI asynchronous endpoints | `/health` (GET) and `/predict` (POST) |
-                """)
+                <div class="table-responsive-wrapper">
+                    <table class="specs-table">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Specification</th>
+                                <th>Technical & Deployment Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Model Architecture</strong></td>
+                                <td>Extreme Gradient Boosting (<code>XGBClassifier</code>)</td>
+                                <td>Multi-class softmax objective (<code>multi:softprob</code>), max_depth=6, n_estimators=300</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Input Feature Vector</strong></td>
+                                <td>51 continuous 3D numerical features</td>
+                                <td>Biomechanical joint angles, torso-scaled Euclidean distances, wrist/bat vectors</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Active Classes (6)</strong></td>
+                                <td>Cover Drive, Pull, Cut, Sweep, Scoop, Leg Glance</td>
+                                <td><code>straight_drive</code> excluded due to scarcity (345 samples); balanced training split</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hardware Target</strong></td>
+                                <td>100% CPU Edge-Deployable</td>
+                                <td>Zero GPU required; &sim;250MB container RAM footprint on Docker / Render</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Model Binary Size</strong></td>
+                                <td>2.82 MB (<code>models/xgboost_v1.pkl</code>)</td>
+                                <td>Serialized via Joblib + compressed StandardScaler and LabelEncoder artifacts</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Guardrail Threshold</strong></td>
+                                <td>0.65 Softmax Confidence Gate</td>
+                                <td>Configurable via <code>CRICKET_CONFIDENCE_THRESHOLD</code>; safely abstains on ambiguous postures</td>
+                            </tr>
+                            <tr>
+                                <td><strong>REST API Interface</strong></td>
+                                <td>FastAPI Asynchronous Endpoints</td>
+                                <td><code>/health</code> (liveness/readiness check) and <code>/predict</code> (multipart image inference)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                gr.Markdown("---")
-                gr.Markdown("### 🏏 Six Supported Shot Classes & Kinematics")
-                gr.Markdown("""
-                1. **Cover Drive (`cover_drive`):** Classical front-foot off-side stroke. Characterized by bent front knee, high forward elbow, and upright torso.
-                2. **Pull Shot (`pull_shot`):** Powerful cross-bat hook against short pitch deliveries. Distinguished by horizontal arm extension and open chest facing square leg.
-                3. **Cut Shot (`cut_shot`):** Back-foot stroke through the point region. Marked by backward weight transfer, raised wrists, and cross-bat chop.
-                4. **Sweep Shot (`sweep_shot`):** Front-knee knelt paddle on the leg side. Marked by lowered center of gravity, bent lead knee, and horizontal bat trajectory.
-                5. **Scoop Shot (`scoop_shot`):** Unorthodox ramp over the wicketkeeper. Characterized by deep crouch, low knee bend, and vertical bat lift behind the shoulders.
-                6. **Leg Glance (`leg_glance_shot`):** Subtle wrist deflection off hip/pads toward fine leg. Distinguished by closed shoulders and subtle wrist roll at impact.
+                <div class="card-title-bar" style="margin-top: 24px;">
+                    <h3 class="card-title-text">🏏 Six Supported Shot Classes & Kinematic Signatures</h3>
+                    <span class="card-tag">Kinematics Taxonomy</span>
+                </div>
+
+                <div class="kinematic-grid">
+                    <!-- 1. Cover Drive -->
+                    <div class="kinematic-card">
+                        <div>
+                            <div class="kinematic-header">
+                                <div class="kinematic-title-wrap">
+                                    <span class="kinematic-emoji">🏏</span>
+                                    <h4 class="kinematic-name">Cover Drive</h4>
+                                </div>
+                                <span class="kinematic-badge">cover_drive</span>
+                            </div>
+                            <span class="kinematic-stance-tag">Front-Foot Off-Side Drive</span>
+                            <p class="kinematic-desc">
+                                Classical front-foot off-side stroke played through the covers. Marked by bent lead knee leaning into the ball line, high leading elbow guide, and upright vertical torso.
+                            </p>
+                        </div>
+                        <div class="kinematic-markers">
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Lead Elbow:</span>
+                                <span class="kinematic-marker-val">High elevation (&gt; 120&deg;)</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Weight Center:</span>
+                                <span class="kinematic-marker-val">Forward lead-foot transfer</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Bat Trajectory:</span>
+                                <span class="kinematic-marker-val">Vertical down-the-line arc</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Pull Shot -->
+                    <div class="kinematic-card">
+                        <div>
+                            <div class="kinematic-header">
+                                <div class="kinematic-title-wrap">
+                                    <span class="kinematic-emoji">💪</span>
+                                    <h4 class="kinematic-name">Pull Shot</h4>
+                                </div>
+                                <span class="kinematic-badge">pull_shot</span>
+                            </div>
+                            <span class="kinematic-stance-tag">Cross-Bat Power Hook</span>
+                            <p class="kinematic-desc">
+                                Aggressive cross-bat stroke against short-pitched deliveries. Distinguished by horizontal dual-arm extension, chest rotation opening towards square leg, and back-foot pivot.
+                            </p>
+                        </div>
+                        <div class="kinematic-markers">
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Torso Rotation:</span>
+                                <span class="kinematic-marker-val">&gt; 45&deg; open to square leg</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Bat Trajectory:</span>
+                                <span class="kinematic-marker-val">Horizontal cross-bat sweep</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Weight Center:</span>
+                                <span class="kinematic-marker-val">Back-foot swivel pivot</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Cut Shot -->
+                    <div class="kinematic-card">
+                        <div>
+                            <div class="kinematic-header">
+                                <div class="kinematic-title-wrap">
+                                    <span class="kinematic-emoji">✂️</span>
+                                    <h4 class="kinematic-name">Cut Shot</h4>
+                                </div>
+                                <span class="kinematic-badge">cut_shot</span>
+                            </div>
+                            <span class="kinematic-stance-tag">Back-Foot Off-Side Chop</span>
+                            <p class="kinematic-desc">
+                                Precision back-foot stroke executed through the point region against wide deliveries. Marked by backward weight shift, elevated wrists above the ball, and sharp downward cross-bat chop.
+                            </p>
+                        </div>
+                        <div class="kinematic-markers">
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Wrist Action:</span>
+                                <span class="kinematic-marker-val">Elevated wrists at release</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Weight Center:</span>
+                                <span class="kinematic-marker-val">Deep back-foot weight shift</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Torso Alignment:</span>
+                                <span class="kinematic-marker-val">Lateral off-side lean</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Sweep Shot -->
+                    <div class="kinematic-card">
+                        <div>
+                            <div class="kinematic-header">
+                                <div class="kinematic-title-wrap">
+                                    <span class="kinematic-emoji">🧹</span>
+                                    <h4 class="kinematic-name">Sweep Shot</h4>
+                                </div>
+                                <span class="kinematic-badge">sweep_shot</span>
+                            </div>
+                            <span class="kinematic-stance-tag">Low-Stance Leg Paddle</span>
+                            <p class="kinematic-desc">
+                                Front-knee knelt paddle on the leg side against spin bowling. Characterized by deeply lowered center of gravity, lead knee bent near the ground, and horizontal bat sweep across the pads.
+                            </p>
+                        </div>
+                        <div class="kinematic-markers">
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Lead Knee:</span>
+                                <span class="kinematic-marker-val">Deep flexion (&lt; 90&deg; kneeling)</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Center of Gravity:</span>
+                                <span class="kinematic-marker-val">Lowered by &gt; 35%</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Bat Trajectory:</span>
+                                <span class="kinematic-marker-val">Low horizontal sweep</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Scoop Shot -->
+                    <div class="kinematic-card">
+                        <div>
+                            <div class="kinematic-header">
+                                <div class="kinematic-title-wrap">
+                                    <span class="kinematic-emoji">🥄</span>
+                                    <h4 class="kinematic-name">Scoop Shot</h4>
+                                </div>
+                                <span class="kinematic-badge">scoop_shot</span>
+                            </div>
+                            <span class="kinematic-stance-tag">Unorthodox Ramp Loft</span>
+                            <p class="kinematic-desc">
+                                High-skill ramp stroke lofted over the wicketkeeper's head. Distinguished by crouched knee flexion, low stance under the delivery plane, and steep vertical bat lift behind the shoulders.
+                            </p>
+                        </div>
+                        <div class="kinematic-markers">
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Stance Elevation:</span>
+                                <span class="kinematic-marker-val">Deep athletic crouch</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Bat Face:</span>
+                                <span class="kinematic-marker-val">Upward-angled open ramp</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Head Position:</span>
+                                <span class="kinematic-marker-val">Aligned directly behind ball line</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6. Leg Glance -->
+                    <div class="kinematic-card">
+                        <div>
+                            <div class="kinematic-header">
+                                <div class="kinematic-title-wrap">
+                                    <span class="kinematic-emoji">⬅️</span>
+                                    <h4 class="kinematic-name">Leg Glance</h4>
+                                </div>
+                                <span class="kinematic-badge">leg_glance_shot</span>
+                            </div>
+                            <span class="kinematic-stance-tag">Subtle Wrist Deflection</span>
+                            <p class="kinematic-desc">
+                                Fine deflection stroke working the ball off the hips/pads toward fine leg. Marked by closed shoulder line, upright stance, and subtle wrist roll at the instant of impact.
+                            </p>
+                        </div>
+                        <div class="kinematic-markers">
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Shoulder Face:</span>
+                                <span class="kinematic-marker-val">Closed line towards on-side</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Wrist Articulation:</span>
+                                <span class="kinematic-marker-val">Supple downward wrist roll</span>
+                            </div>
+                            <div class="kinematic-marker-row">
+                                <span class="kinematic-marker-label">Balance:</span>
+                                <span class="kinematic-marker-val">Centered directly over crease</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kinematic Feature Reference Banner -->
+                <div class="biomech-banner">
+                    <div class="biomech-feature-item">
+                        <div class="biomech-feature-icon">📐</div>
+                        <div>
+                            <div class="biomech-feature-title">Torso-Normalized 3D Invariance</div>
+                            <div class="biomech-feature-desc">All 51 spatial features are normalized against mid-shoulder to mid-hip torso length, ensuring scale invariance across camera zoom and player height.</div>
+                        </div>
+                    </div>
+                    <div class="biomech-feature-item">
+                        <div class="biomech-feature-icon">🛡️</div>
+                        <div>
+                            <div class="biomech-feature-title">Selective Abstention Guardrail</div>
+                            <div class="biomech-feature-desc">Predictions with &lt; 0.65 softmax confidence are routed to "Uncertain Shot", delivering 92.52% selective accuracy on certified coaching frames.</div>
+                        </div>
+                    </div>
+                    <div class="biomech-feature-item">
+                        <div class="biomech-feature-icon">⚡</div>
+                        <div>
+                            <div class="biomech-feature-title">Ultra-Fast CPU Edge Execution</div>
+                            <div class="biomech-feature-desc">Entire pipeline (MediaPipe 33-landmark extraction + XGBoost tree traversal) runs in &lt; 65ms on standard commodity CPUs with ~250MB RAM footprint.</div>
+                        </div>
+                    </div>
+                </div>
                 """)
 
     # 4. FOOTER & BRANDING

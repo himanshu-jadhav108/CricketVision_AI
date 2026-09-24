@@ -833,21 +833,60 @@ div[data-testid="image"]:hover {
     margin-bottom: 16px !important;
 }
 
+.flow-item {
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
 .flow-step {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
     font-size: 0.78rem !important;
     font-weight: 700 !important;
     color: #e2e8f0 !important;
     background: rgba(30, 41, 59, 0.7) !important;
-    padding: 4px 10px !important;
-    border-radius: 6px !important;
+    padding: 5px 12px !important;
+    border-radius: 8px !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     white-space: nowrap !important;
+    transition: all 0.2s ease !important;
+}
+
+.flow-step:hover {
+    border-color: rgba(56, 189, 248, 0.4) !important;
+    background: rgba(30, 41, 59, 0.9) !important;
 }
 
 .flow-step.highlight {
     background: rgba(16, 185, 129, 0.15) !important;
     border-color: rgba(16, 185, 129, 0.35) !important;
     color: #10b981 !important;
+}
+
+.flow-step-idx {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    background: rgba(56, 189, 248, 0.2) !important;
+    color: #38bdf8 !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    margin-right: 2px !important;
+}
+
+.flow-step-idx.success {
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #10b981 !important;
+}
+
+.flow-connector {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .flow-arrow {
@@ -1364,6 +1403,77 @@ table.specs-table td:nth-child(3) {
         touch-action: manipulation !important;
     }
 
+    /* Mobile Vertical Flow Diagram */
+    .pipeline-flow-banner {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0 !important;
+        padding: 18px 14px !important;
+        background: rgba(10, 15, 26, 0.65) !important;
+        border: 1px solid rgba(56, 189, 248, 0.25) !important;
+        border-radius: 16px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .flow-item {
+        width: 100% !important;
+        max-width: 280px !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    .flow-step {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 10px 14px !important;
+        font-size: 0.88rem !important;
+        font-weight: 700 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+        background: rgba(30, 41, 59, 0.85) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .flow-step-idx {
+        width: 22px !important;
+        height: 22px !important;
+        font-size: 0.72rem !important;
+        margin-right: 4px !important;
+    }
+
+    .flow-connector {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 26px !important;
+        position: relative !important;
+        width: 100% !important;
+    }
+
+    .flow-connector::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        bottom: 12px !important;
+        width: 2px !important;
+        background: linear-gradient(180deg, rgba(56, 189, 248, 0.3), rgba(56, 189, 248, 0.85)) !important;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg) !important;
+        font-size: 1rem !important;
+        color: #38bdf8 !important;
+        margin-top: 8px !important;
+        line-height: 1 !important;
+        z-index: 1 !important;
+    }
+
     .pipeline-grid { grid-template-columns: 1fr !important; }
     div[data-testid="gallery"] > div { grid-template-columns: 1fr !important; }
 }
@@ -1592,19 +1702,33 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
 
                 gr.HTML("""
                 <div class="pipeline-flow-banner">
-                    <span class="flow-step">📸 Image</span>
-                    <span class="flow-arrow">➔</span>
-                    <span class="flow-step">🦴 MediaPipe Pose</span>
-                    <span class="flow-arrow">➔</span>
-                    <span class="flow-step">📍 33 Landmarks</span>
-                    <span class="flow-arrow">➔</span>
-                    <span class="flow-step">📐 51 Features</span>
-                    <span class="flow-arrow">➔</span>
-                    <span class="flow-step">🌲 XGBoost</span>
-                    <span class="flow-arrow">➔</span>
-                    <span class="flow-step">🛡️ Confidence Gate (0.65)</span>
-                    <span class="flow-arrow">➔</span>
-                    <span class="flow-step highlight">🏏 Shot / Uncertain</span>
+                    <div class="flow-item">
+                        <span class="flow-step"><span class="flow-step-idx">1</span>📸 Image</span>
+                    </div>
+                    <div class="flow-connector"><span class="flow-arrow">➔</span></div>
+                    <div class="flow-item">
+                        <span class="flow-step"><span class="flow-step-idx">2</span>🦴 MediaPipe Pose</span>
+                    </div>
+                    <div class="flow-connector"><span class="flow-arrow">➔</span></div>
+                    <div class="flow-item">
+                        <span class="flow-step"><span class="flow-step-idx">3</span>📍 33 Landmarks</span>
+                    </div>
+                    <div class="flow-connector"><span class="flow-arrow">➔</span></div>
+                    <div class="flow-item">
+                        <span class="flow-step"><span class="flow-step-idx">4</span>📐 51 Features</span>
+                    </div>
+                    <div class="flow-connector"><span class="flow-arrow">➔</span></div>
+                    <div class="flow-item">
+                        <span class="flow-step"><span class="flow-step-idx">5</span>🌲 XGBoost</span>
+                    </div>
+                    <div class="flow-connector"><span class="flow-arrow">➔</span></div>
+                    <div class="flow-item">
+                        <span class="flow-step"><span class="flow-step-idx">6</span>🛡️ Confidence Gate (0.65)</span>
+                    </div>
+                    <div class="flow-connector"><span class="flow-arrow">➔</span></div>
+                    <div class="flow-item">
+                        <span class="flow-step highlight"><span class="flow-step-idx success">✓</span>🏏 Shot / Uncertain</span>
+                    </div>
                 </div>
                 """)
 

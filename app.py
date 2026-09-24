@@ -386,20 +386,25 @@ def classify_shot(image: Image.Image | np.ndarray | None) -> tuple[str, Image.Im
 CSS = """
 /* Reset & Typography */
 * { box-sizing: border-box !important; }
-body {
+html, body {
     font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     background-color: #080c14 !important;
     color: #e2e8f0 !important;
     margin: 0 !important;
     padding: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
     overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100% !important;
 }
 
 .gradio-container {
+    width: 100% !important;
     max-width: 1260px !important;
     margin: 0 auto !important;
     padding: 16px 20px 40px 20px !important;
     background-color: transparent !important;
+    overflow-x: hidden !important;
 }
 
 /* Custom Scrollbars */
@@ -890,6 +895,63 @@ div[data-testid="image"]:hover {
 .footer-badge-links img:hover { transform: scale(1.05) !important; }
 .footer-footnote { font-size: 0.78rem !important; color: #475569 !important; }
 
+/* ── MOBILE-FIRST TAB NAVIGATION & TABLE OVERFLOW ──────────── */
+/* Horizontal swipeable tab bar on mobile */
+div[role="tablist"], .tab-nav {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 6px !important;
+    padding: 4px 2px 8px 2px !important;
+    margin-bottom: 14px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+div[role="tablist"]::-webkit-scrollbar, .tab-nav::-webkit-scrollbar {
+    display: none !important;
+}
+
+div[role="tablist"] button, .tab-nav button {
+    flex-shrink: 0 !important;
+    font-size: 0.84rem !important;
+    padding: 8px 14px !important;
+    border-radius: 9px !important;
+    white-space: nowrap !important;
+    font-weight: 600 !important;
+}
+
+/* Prevent tables and markdown blocks from blowing out mobile width */
+.gradio-container table {
+    display: block !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-collapse: collapse !important;
+    margin: 12px 0 !important;
+}
+
+.gradio-container .block,
+.gradio-container .form {
+    min-width: 0 !important;
+}
+
+/* Examples gallery mobile optimization */
+@media (max-width: 600px) {
+    .gr-examples .gallery {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 6px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .gr-examples .gallery {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 6px !important;
+    }
+}
+
 /* ── RESPONSIVE MEDIA QUERIES ────────────────────────────── */
 /* Large Tablet & Desktop (<= 1024px) */
 @media (max-width: 1024px) {
@@ -899,47 +961,77 @@ div[data-testid="image"]:hover {
     .metrics-row { grid-template-columns: repeat(2, 1fr) !important; }
 }
 
-/* Tablet Portrait & Handheld Devices (<= 768px) */
-@media (max-width: 768px) {
+/* Tablet Portrait & Handheld Devices (<= 860px) */
+@media (max-width: 860px) {
     .gradio-container { padding: 10px 12px !important; }
+    .gradio-container .gr-row,
+    .gradio-container .row,
+    div[data-testid="row"],
+    .tabitem > div > .gr-row,
+    .tabitem > div > .row {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+    }
     .hero-card { padding: 16px 14px !important; margin-bottom: 14px !important; }
-    .hero-brand { flex-direction: column !important; gap: 6px !important; }
-    #hero-title { font-size: 1.75rem !important; }
-    #hero-subtitle { font-size: 0.95rem !important; }
-    #hero-tagline { font-size: 0.84rem !important; }
-    .product-card { padding: 16px !important; margin-bottom: 14px !important; }
-    .metric-gauge-card { flex-direction: column !important; text-align: center !important; }
-    .meta-item { justify-content: space-around !important; }
-    #image-input, #image-input img, #image-input .image-container { max-height: 340px !important; }
-    #output-image, #output-image img, #output-image .image-container { max-height: 300px !important; }
+    .hero-brand { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 10px !important; }
+    .brand-logo { width: 40px !important; height: 40px !important; }
+    #hero-title { font-size: 1.7rem !important; }
+    #hero-subtitle { font-size: 0.92rem !important; }
+    #hero-tagline { font-size: 0.82rem !important; margin-bottom: 8px !important; }
+    .product-card { width: 100% !important; max-width: 100% !important; min-width: 0 !important; padding: 16px 14px !important; margin-bottom: 12px !important; }
+    .metric-gauge-card { flex-direction: column !important; text-align: center !important; padding: 14px 12px !important; }
+    .gauge-meta { width: 100% !important; }
+    .meta-item { justify-content: space-between !important; padding: 4px 0 !important; border-bottom: 1px dashed rgba(255, 255, 255, 0.06) !important; }
+    #image-input, #image-input .image-container,
+    #output-image, #output-image .image-container { max-height: 280px !important; min-height: 180px !important; }
+    #image-input img, #output-image img { max-height: 280px !important; object-fit: contain !important; }
     .pipeline-grid { grid-template-columns: 1fr !important; }
+    div[data-testid="gallery"] > div { grid-template-columns: 1fr !important; }
 }
 
-/* Standard Mobile Screens (<= 430px: iPhone 14/15 Pro Max, Galaxy S23) */
-@media (max-width: 430px) {
-    .gradio-container { padding: 8px !important; }
+/* Standard Mobile Screens (<= 480px: iPhone 14/15 Pro Max, Galaxy S23, Pixel) */
+@media (max-width: 480px) {
+    .gradio-container { padding: 6px !important; }
     .hero-card { padding: 14px 10px !important; border-radius: 14px !important; }
-    #hero-title { font-size: 1.5rem !important; }
-    #hero-subtitle { font-size: 0.88rem !important; }
-    #hero-tagline { font-size: 0.78rem !important; margin-bottom: 8px !important; }
+    .brand-logo { width: 34px !important; height: 34px !important; border-radius: 9px !important; }
+    #hero-title { font-size: 1.42rem !important; letter-spacing: -0.5px !important; }
+    #hero-subtitle { font-size: 0.84rem !important; line-height: 1.35 !important; }
+    #hero-tagline { font-size: 0.76rem !important; line-height: 1.35 !important; margin-bottom: 8px !important; }
     .tech-pill { font-size: 0.68rem !important; padding: 2px 7px !important; }
-    .classes-bar { gap: 4px !important; padding: 6px 8px !important; }
-    .class-chip { font-size: 0.7rem !important; padding: 3px 6px !important; }
-    button.primary-analyze { height: 50px !important; font-size: 0.95rem !important; }
-    .result-title { font-size: 1.3rem !important; }
-    .stat-val { font-size: 1.3rem !important; }
-    .metrics-row { grid-template-columns: 1fr !important; }
-    .gauge-ring { width: 84px !important; height: 84px !important; }
-    .gauge-center { width: 70px !important; height: 70px !important; }
+    .classes-bar { gap: 4px !important; padding: 6px 6px !important; border-radius: 10px !important; }
+    .class-chip { font-size: 0.68rem !important; padding: 3px 6px !important; border-radius: 6px !important; }
+    button.primary-analyze { height: 50px !important; font-size: 0.95rem !important; width: 100% !important; touch-action: manipulation !important; }
+    .card-title-text { font-size: 0.95rem !important; }
+    .result-kicker { font-size: 0.68rem !important; }
+    .result-title { font-size: 1.25rem !important; }
+    .result-desc { font-size: 0.82rem !important; line-height: 1.35 !important; }
+    .abstention-banner { font-size: 0.78rem !important; padding: 8px 10px !important; }
+    .stat-val { font-size: 1.25rem !important; }
+    .metrics-row { grid-template-columns: 1fr !important; gap: 8px !important; }
+    .gauge-ring { width: 80px !important; height: 80px !important; }
+    .gauge-center { width: 66px !important; height: 66px !important; }
+    .gauge-pct { font-size: 1.05rem !important; }
+    .prob-info { font-size: 0.78rem !important; }
+    .prob-bar-track { height: 5px !important; }
+    .footer-wrap { padding: 18px 8px !important; }
+    .footer-author { font-size: 0.92rem !important; }
+    .footer-role { font-size: 0.76rem !important; }
+    .footer-badge-links img { height: 20px !important; }
+    .footer-footnote { font-size: 0.68rem !important; line-height: 1.35 !important; }
 }
 
-/* Compact Mobile Screens (<= 360px) */
+/* Compact Mobile Screens (<= 360px: Small Android / Fold Cover) */
 @media (max-width: 360px) {
-    #hero-title { font-size: 1.3rem !important; }
-    #hero-subtitle { font-size: 0.8rem !important; }
-    #hero-tagline { font-size: 0.72rem !important; }
-    .class-chip { font-size: 0.65rem !important; padding: 2px 4px !important; }
-    .card-title-text { font-size: 0.9rem !important; }
+    #hero-title { font-size: 1.25rem !important; }
+    #hero-subtitle { font-size: 0.78rem !important; }
+    #hero-tagline { font-size: 0.7rem !important; }
+    .class-chip { font-size: 0.62rem !important; padding: 2px 4px !important; }
+    .tech-pill { font-size: 0.64rem !important; padding: 2px 5px !important; }
+    .card-title-text { font-size: 0.88rem !important; }
+    .gauge-ring { width: 72px !important; height: 72px !important; }
+    .gauge-center { width: 58px !important; height: 58px !important; }
+    .gauge-pct { font-size: 0.95rem !important; }
 }
 """
 

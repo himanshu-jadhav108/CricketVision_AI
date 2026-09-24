@@ -1286,19 +1286,11 @@ with gr.Blocks(title=f"{PROJECT_NAME} — Intelligent Cricket Shot Classificatio
                         interactive=False,
                     )
 
-            # Core Execution Event with smooth auto-scroll on mobile
+            # Core Execution Event
             submit_btn.click(
                 fn=classify_shot,
                 inputs=[image_input],
                 outputs=[output_html, output_img],
-                js="""() => {
-                    setTimeout(() => {
-                        const resultsEl = document.querySelector('.results-card');
-                        if (resultsEl && window.innerWidth <= 920) {
-                            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                    }, 250);
-                }"""
             )
 
             # Example Gallery
